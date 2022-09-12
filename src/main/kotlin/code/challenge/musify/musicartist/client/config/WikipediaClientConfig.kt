@@ -5,9 +5,9 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.web.reactive.function.client.WebClient
 
 @Configuration
-class WikipediaClientConfig(val wikipediaConfigProperties: WikipediaConfigProperties) {
+class WikipediaClientConfig {
     @Bean("wikipediaWebClient")
-    fun wikipediaWebClient() = WebClient.builder()
-        .baseUrl(wikipediaConfigProperties.host)
+    fun wikipediaWebClient(wikipediaConfigProperties: WikipediaConfigProperties) = WebClient.builder()
+        .baseUrl(wikipediaConfigProperties.apiUrl)
         .build()
 }

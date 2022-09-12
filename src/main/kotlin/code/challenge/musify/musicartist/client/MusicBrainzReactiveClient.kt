@@ -10,7 +10,7 @@ import org.springframework.web.reactive.function.client.WebClient
 
 @Component
 @Profile("Reactive")
-class MusicBrainzReactiveClient(val musicBrainzWebClient: WebClient) {
+class MusicBrainzReactiveClient(private val musicBrainzWebClient: WebClient) {
     fun findArtistById(id: MBID) =
         musicBrainzWebClient.get().uri("/artist/$id?inc=url-rels+release-groups")
             .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)

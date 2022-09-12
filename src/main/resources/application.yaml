@@ -1,11 +1,7 @@
 coverartarchive:
-  host: http://coverartarchive.org
-mongodb:
-  password: FTE3WVwtqUDGIOMB
-  url: mongodb+srv://plugsurfing-challenge:<password>@playground.gflqb30.mongodb.net/?retryWrites=true&w=majority
-  username: plugsurfing-challenge
+  apiUrl: http://coverartarchive.org
 musicbrainz:
-  host: http://musicbrainz.org/ws/2
+  apiUrl: http://musicbrainz.org/ws/2
 spring:
   data:
     mongodb:
@@ -14,7 +10,7 @@ spring:
       username: plugsurfing-challenge
       uri: mongodb+srv://${spring.data.mongodb.username}:${spring.data.mongodb.password}@playground.gflqb30.mongodb.net/?retryWrites=true&w=majority
 wikidata:
-  host: https://www.wikidata.org/wiki/Special:EntityData
+  apiUrl: https://www.wikidata.org/wiki/Special:EntityData
 wikipedia:
-  host: https://en.wikipedia.org/api/rest_v1
+  apiUrl: https://en.wikipedia.org/api/rest_v1
 

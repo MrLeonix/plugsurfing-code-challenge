@@ -11,7 +11,7 @@ import org.springframework.web.reactive.function.client.awaitExchange
 import org.springframework.web.reactive.function.client.createExceptionAndAwait
 
 @Component
-class WikiDataClient(val wikiDataWebClient: WebClient) {
+class WikiDataClient(private val wikiDataWebClient: WebClient) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
     suspend fun findEntityDataById(id: String) =

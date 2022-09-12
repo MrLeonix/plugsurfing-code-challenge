@@ -12,7 +12,7 @@ import org.springframework.web.reactive.function.client.awaitExchange
 import org.springframework.web.reactive.function.client.createExceptionAndAwait
 
 @Component
-class MusicBrainzClient(val musicBrainzWebClient: WebClient) {
+class MusicBrainzClient(private val musicBrainzWebClient: WebClient) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
     suspend fun findArtistById(id: MBID) =

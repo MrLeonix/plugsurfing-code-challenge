@@ -14,8 +14,8 @@ import java.util.*
 @Service
 @Profile("Reactive")
 class MusicBrainzReactiveService(
-    val musicArtistRepository: MusicArtistReactiveRepository,
-    val musicBrainzClient: MusicBrainzReactiveClient
+    private val musicArtistRepository: MusicArtistReactiveRepository,
+    private val musicBrainzClient: MusicBrainzReactiveClient
 ) : MusicArtistReactiveService {
     private val logger = LoggerFactory.getLogger(javaClass)
 
@@ -23,7 +23,6 @@ class MusicBrainzReactiveService(
 
     override fun getArtist(id: MBID) =
         musicArtistRepository.findByMbid(id)
-            .also { logger.info("Requesting music artist with MBID $id") }
             .switchIfEmpty {
                 Mono.empty<Any>().zipWith(getMusicBrainzArtist(id)) { _, musicArtistResponse ->
                     logger.info("Couldn't find any persisted data, retrieving from MusicBrainz.")

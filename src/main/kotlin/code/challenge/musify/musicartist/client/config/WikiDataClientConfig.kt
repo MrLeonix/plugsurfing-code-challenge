@@ -6,9 +6,9 @@ import org.springframework.web.reactive.function.client.ExchangeStrategies
 import org.springframework.web.reactive.function.client.WebClient
 
 @Configuration
-class WikiDataClientConfig(val wikiDataConfigProperties: WikiDataConfigProperties) {
+class WikiDataClientConfig {
     @Bean("wikiDataWebClient")
-    fun wikiDataWebClient(): WebClient {
+    fun wikiDataWebClient(wikiDataConfigProperties: WikiDataConfigProperties): WebClient {
         val maxBufferSize = 16 * 1024 * 1024
         val strategies = ExchangeStrategies.builder()
             .codecs {
@@ -16,7 +16,7 @@ class WikiDataClientConfig(val wikiDataConfigProperties: WikiDataConfigPropertie
             }.build()
         return WebClient.builder()
             .exchangeStrategies(strategies)
-            .baseUrl(wikiDataConfigProperties.host)
+            .baseUrl(wikiDataConfigProperties.apiUrl)
             .build()
     }
 }

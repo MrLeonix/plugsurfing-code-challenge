@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("music-artist")
 @Profile("Reactive")
 class ArtistReactiveController(
-    val musicArtistService: MusicArtistReactiveService
+    private val musicArtistService: MusicArtistReactiveService
 ) {
     @GetMapping("details/{mbid}")
     fun getArtist(@PathVariable mbid: MBID) = musicArtistService.getArtist(mbid)

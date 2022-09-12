@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class CoverArtArchiveService(val coverArtArchiveClient: CoverArtArchiveClient) : AlbumCoversService {
+class CoverArtArchiveService(private val coverArtArchiveClient: CoverArtArchiveClient) : AlbumCoversService {
     private suspend fun getReleaseGroup(id: UUID) = coverArtArchiveClient.findAlbumCoverImages(id)
 
     override suspend fun getAlbumCovers(id: UUID) = getReleaseGroup(id)

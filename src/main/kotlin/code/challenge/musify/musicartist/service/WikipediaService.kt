@@ -4,6 +4,6 @@ import code.challenge.musify.musicartist.client.WikipediaClient
 import org.springframework.stereotype.Service
 
 @Service
-class WikipediaService(val wikipediaClient: WikipediaClient) {
+class WikipediaService(private val wikipediaClient: WikipediaClient) {
     suspend fun getArtistSummary(title: String) = wikipediaClient.getPageSummaryForTitle(title)
 }

@@ -7,10 +7,10 @@ import org.springframework.web.reactive.function.client.WebClient
 import reactor.netty.http.client.HttpClient
 
 @Configuration
-class CoverArtArchiveClientConfig(val coverArtArchiveConfigProperties: CoverArtArchiveConfigProperties) {
+class CoverArtArchiveClientConfig(private val coverArtArchiveConfigProperties: CoverArtArchiveConfigProperties) {
     @Bean("coverArtArchiveWebClient")
     fun coverArtArchiveWebClient() = WebClient.builder()
-        .baseUrl(coverArtArchiveConfigProperties.host)
+        .baseUrl(coverArtArchiveConfigProperties.apiUrl)
         .clientConnector(ReactorClientHttpConnector(HttpClient.create().followRedirect(true)))
         .build()
 }

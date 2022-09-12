@@ -10,6 +10,6 @@ data class MusicArtistResponse(
     val gender: Gender,
     val country: String,
     val disambiguation: String,
-    val description: String,
+    val description: String?,
     val albums: List<MusicArtist.Album>? = mutableListOf(),
 )

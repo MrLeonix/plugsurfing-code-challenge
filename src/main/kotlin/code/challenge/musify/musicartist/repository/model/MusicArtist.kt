@@ -10,13 +10,13 @@ import java.util.*
 data class MusicArtist(
     val albums: List<Album>? = mutableListOf(),
     val country: String,
-    val description: String,
+    val description: String?,
     val disambiguation: String,
     val gender: Gender,
     val id: UUID,
     val name: String,
     val mbid: MBID,
-    val wikiDataEntityId: String,
+    val wikiDataEntityId: String?,
 ) {
     fun toArtistResponse() = MusicArtistResponse(
         mbid,

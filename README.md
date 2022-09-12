@@ -16,8 +16,10 @@ albums.
     - [WikiData](#wikidata)
     - [Wikipedia](#wikipedia)
     - [Cover Art Archive](#cover-art-archive)
+- [Error handling](#error-handling)
 - [Challenges](#challenges)
-- [Load testing with Grafana K6](#load-testing-with-grafana-k6)
+- [Tests](#tests)
+    - [Load testing with Grafana K6](#load-testing-with-grafana-k6)
 
 ## Architecture
 
@@ -149,6 +151,15 @@ API URL: `https://en.wikipedia.org/api/rest_v1/page/summary`
 
 API URL: `http://coverartarchive.org/`
 
+## Error handling
+
+For the sake of simplicity, there is a general error handler
+class ([ErrorHandler](src/main/kotlin/code/challenge/musify/config/ExceptionHandler.kt)) that will respond to every
+exception with a 400 status and the exception message.
+Later, (custom) exceptions would be added there as well.
+
+Ideally, I would like to implement the [json:api](https://jsonapi.org/) pattern to it.
+
 ## Challenges
 
 Because this application make requests to several sources, it is crucial to have asynchronous code in place.
@@ -161,10 +172,52 @@ with `@Profile("Reactive")`) could make a huge difference, given the high load r
 Unfortunately, due to lack of time and also not having used reactive programming so far, it was not possible to use it
 in this project.
 
-## Load testing with Grafana K6
+> **Note:** before using Reactive code, the `"org.springframework.boot:spring-boot-starter-data-mongodb-reactive"`
+> dependency should be uncommented.
 
-There is a script file named `loadtest.js` to be used with [Grafana K6](https://k6.io/docs/getting-started/running-k6/).
-It is possible to define many MBIDs and run them at once to check the application performance.
+## Tests
+
+Although not mandatory, I have added a single test entry point to show how I approach them.
+The Service test in place should take care of checking every external service call, as well
+as assert that the database is checked before sending any response outside the application.
+
+Subsequent tests would follow a similar behavior, using MockK and, for integration tests,
+the Embbeded MongoDB testing library.
+
+### Load testing with Grafana K6
+
+There is a script file named `loadtest.js` to be used with [Grafana K6](https://k6.io/docs/getting-started/).
+
+In order to run it, you should first [install K6](https://k6.io/docs/getting-started/installation/) CLI and, in the
+root folder of this project, run the following command:
+
+```
+k6 run loadtest.js
+```
+
+It is possible to define many MBIDs and run them at once to check the application performance. Example:
+
+```javascript
+export default function () {
+    const res = http.get('http://<Local IP Address>:8080/music-artist/details/<mbid>');
+    console.log(res);
+    check(res, {
+        '200 status': r => r.status === 200
+    })
+    sleep(1);
+}
+```
+
+For more information on what checks can be done, check [K6 Checks](https://k6.io/docs/using-k6/checks/).
+
+> **Note:** setting the url as `localhost` won't work. You should put the actual local IP address in the 0.0.0.0 format.
 
 Change `vus` and `duration` value to fit the scenario you want to simulate. Visit Grafana K6 documentation to have
-a better understanding of the tool.
+a better understanding of the tool. Example:
+
+```javascript
+export const options = {
+    vus: 10,
+    duration: '1m'
+}
+```

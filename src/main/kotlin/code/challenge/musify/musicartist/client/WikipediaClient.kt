@@ -11,7 +11,7 @@ import org.springframework.web.reactive.function.client.awaitExchange
 import org.springframework.web.reactive.function.client.createExceptionAndAwait
 
 @Component
-class WikipediaClient(val wikipediaWebClient: WebClient) {
+class WikipediaClient(private val wikipediaWebClient: WebClient) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
     suspend fun getPageSummaryForTitle(title: String) =

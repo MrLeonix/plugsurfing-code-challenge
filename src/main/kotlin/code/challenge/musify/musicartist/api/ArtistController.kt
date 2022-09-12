@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("music-artist")
 class ArtistController(
-    val musicArtistService: MusicArtistService
+    private val musicArtistService: MusicArtistService
 ) {
     @GetMapping("details/{mbid}")
     suspend fun getArtist(@PathVariable mbid: MBID) = musicArtistService.getArtist(mbid).toArtistResponse()

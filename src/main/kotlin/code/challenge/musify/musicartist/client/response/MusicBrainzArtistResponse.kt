@@ -16,7 +16,7 @@ data class MusicBrainzArtistResponse(
     val releaseGroups: List<ReleaseGroup>,
     val relations: List<Relation>,
 ) {
-    fun getWikiDataEntityId() = relations.first { it.type == "wikidata" }.url.resource.substringAfterLast("/")
+    fun getWikiDataEntityId() = relations.firstOrNull { it.type == "wikidata" }?.url?.resource?.substringAfterLast("/")
 
     data class Relation(
         val type: String,

@@ -5,9 +5,9 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.web.reactive.function.client.WebClient
 
 @Configuration
-class MusicBrainzClientConfig(val musicBrainzConfigProperties: MusicBrainzConfigProperties) {
+class MusicBrainzClientConfig {
     @Bean("musicBrainzWebClient")
-    fun musicBrainzWebClient() = WebClient.builder()
-        .baseUrl(musicBrainzConfigProperties.host)
+    fun musicBrainzWebClient(musicBrainzConfigProperties: MusicBrainzConfigProperties) = WebClient.builder()
+        .baseUrl(musicBrainzConfigProperties.apiUrl)
         .build()
 }

@@ -4,6 +4,6 @@ import code.challenge.musify.musicartist.client.WikiDataClient
 import org.springframework.stereotype.Service
 
 @Service
-class WikiDataService(val wikiDataClient: WikiDataClient) {
+class WikiDataService(private val wikiDataClient: WikiDataClient) {
     suspend fun getEntityDataById(entityDataId: String) = wikiDataClient.findEntityDataById(entityDataId)
 }
